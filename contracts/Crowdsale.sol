@@ -109,6 +109,10 @@ contract Crowdsale is Context, ReentrancyGuard {
      * @param beneficiary Recipient of the token purchase
      */
     function buyTokens(address beneficiary) public nonReentrant payable {
+
+        //Tony
+        require(_token.balanceOf(msg.sender) < 2, "Enough token for working");
+
         uint256 weiAmount = msg.value;
         _preValidatePurchase(beneficiary, weiAmount);
 

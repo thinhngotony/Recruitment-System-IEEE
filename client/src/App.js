@@ -71,6 +71,7 @@ class App extends Component {
 
   handleKycWhitelisting = async () => {
     await this.kycInstance.methods.setKycCompleted(this.state.kycAddress).send({from: this.accounts[0]});
+    await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
     alert("KYC for "+this.state.kycAddress+" is completed");
   }
 
@@ -80,15 +81,15 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>StarDucks Cappucino Token Sale</h1>
-        <p>Get your Tokens today!</p>
+        <h1>Google is Hiring!</h1>
+        <p>Get Google Job Tokens today!</p>
         <h2>Kyc Whitelisting</h2>
         Address to allow: <input type="text" name="kycAddress" value={this.state.kycAddress} onChange={this.handleInputChange} />
         <button type="button" onClick={this.handleKycWhitelisting}>Add to Whitelist</button>
-        <h2>Buy Tokens</h2>
-        <p>If you want to buy tokens, send Wei to this address: {this.state.tokenSaleAddress}</p>
-        <p>You currently have: {this.state.userTokens} CAPPU Tokens</p>
-        <button type="button" onClick={this.handleBuyTokens}>Buy more tokens</button>
+        <h2>Complete Apply</h2>
+        <p>If you finish applying and started to work, send Wei to this address: {this.state.tokenSaleAddress}</p>
+        <p>You currently have: {this.state.userTokens} GG Tokens</p>
+        <button type="button" onClick={this.handleBuyTokens}>Finish</button>
       </div>
     );
   }
