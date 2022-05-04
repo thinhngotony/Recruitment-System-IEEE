@@ -7,7 +7,7 @@ import getWeb3 from "./getWeb3";
 import "./App.css";
 
 class App extends Component {
-  state = { loaded:false, kycAddress: "0x123...", tokenSaleAddress: null, userTokens:0 };
+  state = { loaded:false, kycAddress: "0x123...", tokenSaleAddress: null, userTokens:0, userStatus: "Free" };
 
   componentDidMount = async () => {
     try {
@@ -37,7 +37,9 @@ class App extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.listenToTokenTransfer();
-      this.setState({loaded:true, tokenSaleAddress:MyTokenSale.networks[this.networkId].address}, this.updateUserTokens);
+      this.listenToStatusChange();
+      this.setState({loaded:true, tokenSaleAddress:MyTokenSale.networks[this.networkId].address}, this.updateUserTokens, this.updateUserStatus);
+      console.log(this.state)
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -50,10 +52,29 @@ class App extends Component {
   updateUserTokens = async () => {
     let userTokens = await this.tokenInstance.methods.balanceOf(this.accounts[0]).call();
     this.setState({userTokens: userTokens});
+    // if (this.state.userTokens === 1) {
+    //   this.setState({status: "Applying"})
+    // }
+    // else if(this.state.userTokens === 2){
+    //   this.setState({status: "Working"})
+    // }
+  }
+
+  updateUserStatus = async () => {
+    if (this.state.userTokens === 1) {
+      this.setState({userStatus: "Applying"})
+    }
+    else if(this.state.userTokens === 2){
+      this.setState({userStatus: "Working"})
+    }
   }
 
   listenToTokenTransfer = () => {
-    this.tokenInstance.events.Transfer({to: this.accounts[0]}).on("data",this.updateUserTokens);
+    this.tokenInstance.events.Transfer({to: this.accounts[0]}).on("data", this.updateUserTokens);
+  }
+
+  listenToStatusChange = () => {
+    this.tokenInstance.events.Transfer({to: this.accounts[0]}).on("data", this.updateUserStatus);
   }
 
   handleBuyTokens = async() => {
@@ -88,6 +109,7 @@ class App extends Component {
         <button type="button" onClick={this.handleKycWhitelisting}>Add to Whitelist</button>
         <h2>Complete Apply</h2>
         <p>If you finish applying and started to work, send Wei to this address: {this.state.tokenSaleAddress}</p>
+        Your Status: <input type="text" name="status" value={this.state.userStatus} onChange={this.handleInputChange} disabled/>  
         <p>You currently have: {this.state.userTokens} GG Tokens</p>
         <button type="button" onClick={this.handleBuyTokens}>Finish</button>
       </div>
