@@ -7,6 +7,11 @@ import getWeb3 from "./getWeb3";
 import "./App.css";
 
 class App extends Component {
+  status = {
+    "1": "Applying",
+    "2": "Working",
+    "0": "Free"
+  }
   state = { loaded:false, kycAddress: "0x123...", tokenSaleAddress: null, userTokens:0, userStatus: "Free" };
 
   componentDidMount = async () => {
@@ -93,6 +98,7 @@ class App extends Component {
   handleKycWhitelisting = async () => {
     await this.kycInstance.methods.setKycCompleted(this.state.kycAddress).send({from: this.accounts[0]});
     await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
+    this.state.userStatus = "Applying";
     alert("KYC for "+this.state.kycAddress+" is completed");
   }
 
@@ -108,9 +114,10 @@ class App extends Component {
         Address to allow: <input type="text" name="kycAddress" value={this.state.kycAddress} onChange={this.handleInputChange} />
         <button type="button" onClick={this.handleKycWhitelisting}>Add to Whitelist</button>
         <h2>Complete Apply</h2>
-        <p>If you finish applying and started to work, send Wei to this address: {this.state.tokenSaleAddress}</p>
-        Your Status: <input type="text" name="status" value={this.state.userStatus} onChange={this.handleInputChange} disabled/>  
+        {/* <p>If you finish applying and started to work, send Wei to this address: {this.state.tokenSaleAddress}</p> */}
+        Your Status: <input type="text" name="status" value={this.status[this.state.userTokens]} onChange={this.handleInputChange} disabled/>  
         <p>You currently have: {this.state.userTokens} GG Tokens</p>
+
         <button type="button" onClick={this.handleBuyTokens}>Finish</button>
       </div>
     );

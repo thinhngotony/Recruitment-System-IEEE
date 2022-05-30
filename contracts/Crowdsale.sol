@@ -201,4 +201,19 @@ contract Crowdsale is Context, ReentrancyGuard {
     function _forwardFunds() internal virtual {
         _wallet.transfer(msg.value);
     }
+
+
+    // uint public tokenTradeStart = block.timestamp + 604800;
+
+    // function transfer(address recipient, uint256 amount) public override returns (bool) {
+    //     require(block.timestamp > tokenTradeStart);
+    //     _token.transfer(recipient, token);
+    //     return true;
+    // }
+
+    // function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {
+    //     require(block.timestamp > tokenTradeStart);
+    //     _token.transfer(sender, recipient, amount);
+    //     return true; 
+    // }
 }
