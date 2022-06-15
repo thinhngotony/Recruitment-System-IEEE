@@ -12,7 +12,7 @@ class App extends Component {
     "2": "Working",
     "0": "Free"
   }
-  state = { loaded:false, kycAddress: "0x123...", tokenSaleAddress: null, userTokens:0, userStatus: "Free" };
+  state = { loaded:false, kycAddress: "0x123...", tokenSaleAddress: null, userTokens:0, userStatus: "Free", userOTP: 0 };
 
   componentDidMount = async () => {
     try {
@@ -39,6 +39,11 @@ class App extends Component {
         KycContract.networks[this.networkId] && KycContract.networks[this.networkId].address,
       );
 
+      //this.function = new this.web3.eth.Contract()
+      //Remove.abi
+      //Remove.networks[this.networkID] && Remove.networks[this,networkID].address,
+      //);
+
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.listenToTokenTransfer();
@@ -57,6 +62,7 @@ class App extends Component {
   updateUserTokens = async () => {
     let userTokens = await this.tokenInstance.methods.balanceOf(this.accounts[0]).call();
     this.setState({userTokens: userTokens});
+   
     // if (this.state.userTokens === 1) {
     //   this.setState({status: "Applying"})
     // }
@@ -74,13 +80,20 @@ class App extends Component {
     }
   }
 
+  updateUserOTP = async () => {
+    if (this.state.userTokens !== 0) {
+      this.setState({userOTP: "9999"})
+    }
+  }
+
   listenToTokenTransfer = () => {
     this.tokenInstance.events.Transfer({to: this.accounts[0]}).on("data", this.updateUserTokens);
   }
 
   listenToStatusChange = () => {
-    this.tokenInstance.events.Transfer({to: this.accounts[0]}).on("data", this.updateUserStatus);
+    this.tokenInstance.events.Transfer({to: this.accounts[0]}).on("data", this.updateUserOTP);
   }
+  
 
   handleBuyTokens = async() => {
     await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
@@ -100,6 +113,7 @@ class App extends Component {
     await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
     this.state.userStatus = "Applying";
     alert("KYC for "+this.state.kycAddress+" is completed");
+    this.setState({userOTP: 9999});
   }
 
   render() {
@@ -116,12 +130,12 @@ class App extends Component {
         <h2>Complete Apply</h2>
         {/* <p>If you finish applying and started to work, send Wei to this address: {this.state.tokenSaleAddress}</p> */}
         Your Status: <input type="text" name="status" value={this.status[this.state.userTokens]} onChange={this.handleInputChange} disabled/>  
+        Your OTP<input type="text" name="otp" value={this.state.userOTP} onChange={this.handleInputChange} disabled/>
         <p>You currently have: {this.state.userTokens} GG Tokens</p>
-
         <button type="button" onClick={this.handleBuyTokens}>Finish</button>
       </div>
     );
   }
 }
-
+  
 export default App;
