@@ -62,26 +62,7 @@ class App extends Component {
   updateUserTokens = async () => {
     let userTokens = await this.tokenInstance.methods.balanceOf(this.accounts[0]).call();
     this.setState({userTokens: userTokens});
-   
-    // if (this.state.userTokens === 1) {
-    //   this.setState({status: "Applying"})
-    // }
-    // else if(this.state.userTokens === 2){
-    //   this.setState({status: "Working"})
-    // }
-  }
-
-  updateUserStatus = async () => {
-    if (this.state.userTokens === 1) {
-      this.setState({userStatus: "Applying"})
-    }
-    else if(this.state.userTokens === 2){
-      this.setState({userStatus: "Working"})
-    }
-  }
-
-  updateUserOTP = async () => {
-    if (this.state.userTokens !== 0) {
+    if (this.state.userTokens != 0) {
       this.setState({userOTP: "9999"})
     }
   }
@@ -91,7 +72,8 @@ class App extends Component {
   }
 
   listenToStatusChange = () => {
-    this.tokenInstance.events.Transfer({to: this.accounts[0]}).on("data", this.updateUserOTP);
+    console.log(this.state.userTokens)
+
   }
   
 
@@ -128,8 +110,8 @@ class App extends Component {
         Address to allow: <input type="text" name="kycAddress" value={this.state.kycAddress} onChange={this.handleInputChange} />
         <button type="button" onClick={this.handleKycWhitelisting}>Add to Whitelist</button>
         <h2>Complete Apply</h2>
-        {/* <p>If you finish applying and started to work, send Wei to this address: {this.state.tokenSaleAddress}</p> */}
         Your Status: <input type="text" name="status" value={this.status[this.state.userTokens]} onChange={this.handleInputChange} disabled/>  
+        
         Your OTP<input type="text" name="otp" value={this.state.userOTP} onChange={this.handleInputChange} disabled/>
         <p>You currently have: {this.state.userTokens} GG Tokens</p>
         <button type="button" onClick={this.handleBuyTokens}>Finish</button>
