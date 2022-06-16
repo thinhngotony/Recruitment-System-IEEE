@@ -90,8 +90,7 @@ class App extends Component {
 
   handleKycWhitelisting = async () => {
     await this.kycInstance.methods.setKycCompleted(this.state.kycAddress).send({from: this.accounts[0]});
-    await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
-    alert("KYC for "+this.state.kycAddress+" is completed");
+   alert("KYC for "+this.state.kycAddress+" is completed");
   }
 
   render() {
@@ -104,7 +103,7 @@ class App extends Component {
         <h2>Kyc Whitelisting</h2>
         Address to allow: <input type="text" name="kycAddress" value={this.state.kycAddress} onChange={this.handleInputChange} size="45"/>
         <button type="button" onClick={this.handleKycWhitelisting}>Add to Whitelist</button>
-        <button type="button" onClick={this.handleBuyTokens}>Add to Staff</button>
+
         <h1>__________________________________________________________________________</h1>
         <h1>Google is Hiring!</h1>
         <p>Get Google Job Tokens today by email your CV to this address <strong>career@google.com</strong> </p>
@@ -112,7 +111,7 @@ class App extends Component {
         You currently have: {this.state.userTokens} GG Tokens<br></br><br></br>
         Your Status: <input type="text" name="status" value={this.status[this.state.userTokens]} onChange={this.handleInputChange} disabled/><br></br><br></br>
         Your OTP: <input type="text" name="otp" value={this.otp[this.state.kycAddress]} onChange={this.handleInputChange} /><br></br><br></br>
-
+        <button type="button" onClick={this.handleBuyTokens}>Claim GG token</button><br></br><br></br>
         <button type="button" onClick={this.handleRecognition}disabled>Download module training face</button><br></br><br></br>
         <a href="https://drive.google.com/drive/folders/1dboInoA0NxSDt4_2zjapmiJmFuFcU2cW?usp=sharing" target="_parent"><button>Upload your facial data now</button></a>
       </div>
