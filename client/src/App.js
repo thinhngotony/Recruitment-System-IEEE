@@ -12,7 +12,13 @@ class App extends Component {
     "2": "Working",
     "0": "Free"
   }
-  state = { loaded:false, kycAddress: "0x123...", tokenSaleAddress: null, userTokens:0, userStatus: "Free", userOTP: 0 };
+  otp = {
+    "0x8AcaEEF29444ed2070CAd84B1d17Be4F13A8Cdbc": "0000",
+    "0x297c8DC19eb56E0E49dB99860D4FE6554900bc14": "9999"
+  }
+  state = { loaded:false, kycAddress: "", tokenSaleAddress: null, userTokens:0, userStatus: "Free", userOTP: ""
+
+};
 
   componentDidMount = async () => {
     try {
@@ -60,10 +66,7 @@ class App extends Component {
 
   updateUserTokens = async () => {
     let userTokens = await this.tokenInstance.methods.balanceOf(this.accounts[0]).call();
-    this.setState({userTokens: userTokens});
-    if (this.state.userTokens != 0) {
-      this.setState({userOTP: "9999"})
-    }
+    this.setState({userTokens: userTokens });
   }
 
   listenToTokenTransfer = () => {
@@ -74,6 +77,7 @@ class App extends Component {
   handleBuyTokens = async() => {
     await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
   }
+
 
   handleInputChange = (event) => {
     const target = event.target;
@@ -87,9 +91,7 @@ class App extends Component {
   handleKycWhitelisting = async () => {
     await this.kycInstance.methods.setKycCompleted(this.state.kycAddress).send({from: this.accounts[0]});
     await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
-    this.state.userStatus = "Applying";
     alert("KYC for "+this.state.kycAddress+" is completed");
-    this.setState({userOTP: 9999});
   }
 
   render() {
@@ -98,16 +100,21 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Google is Hiring!</h1>
-        <p>Get Google Job Tokens today!</p>
+        <h1>Server Side</h1>
         <h2>Kyc Whitelisting</h2>
-        Address to allow: <input type="text" name="kycAddress" value={this.state.kycAddress} onChange={this.handleInputChange} />
+        Address to allow: <input type="text" name="kycAddress" value={this.state.kycAddress} onChange={this.handleInputChange} size="45"/>
         <button type="button" onClick={this.handleKycWhitelisting}>Add to Whitelist</button>
-        <h2>Complete Apply</h2>
-        Your Status: <input type="text" name="status" value={this.status[this.state.userTokens]} onChange={this.handleInputChange} disabled/>  
-        Your OTP<input type="text" name="otp" value={this.state.userOTP} onChange={this.handleInputChange} disabled/>
-        <p>You currently have: {this.state.userTokens} GG Tokens</p>
-        <button type="button" onClick={this.handleBuyTokens}>Finish</button>
+        <button type="button" onClick={this.handleBuyTokens}>Add to Staff</button>
+        <h1>__________________________________________________________________________</h1>
+        <h1>Google is Hiring!</h1>
+        <p>Get Google Job Tokens today by email your CV to this address <strong>career@google.com</strong> </p>
+        Your account address: {this.accounts}<br></br><br></br>
+        You currently have: {this.state.userTokens} GG Tokens<br></br><br></br>
+        Your Status: <input type="text" name="status" value={this.status[this.state.userTokens]} onChange={this.handleInputChange} disabled/><br></br><br></br>
+        Your OTP: <input type="text" name="otp" value={this.otp[this.state.kycAddress]} onChange={this.handleInputChange} /><br></br><br></br>
+
+        <button type="button" onClick={this.handleRecognition}disabled>Download module training face</button><br></br><br></br>
+        <a href="https://drive.google.com/drive/folders/1dboInoA0NxSDt4_2zjapmiJmFuFcU2cW?usp=sharing" target="_parent"><button>Upload your facial data now</button></a>
       </div>
     );
   }
