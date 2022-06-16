@@ -47,8 +47,7 @@ class App extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.listenToTokenTransfer();
-      this.listenToStatusChange();
-      this.setState({loaded:true, tokenSaleAddress:MyTokenSale.networks[this.networkId].address}, this.updateUserTokens, this.updateUserStatus);
+      this.setState({loaded:true, tokenSaleAddress:MyTokenSale.networks[this.networkId].address}, this.updateUserTokens);
       console.log(this.state)
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -69,11 +68,6 @@ class App extends Component {
 
   listenToTokenTransfer = () => {
     this.tokenInstance.events.Transfer({to: this.accounts[0]}).on("data", this.updateUserTokens);
-  }
-
-  listenToStatusChange = () => {
-    console.log(this.state.userTokens)
-
   }
   
 
@@ -111,7 +105,6 @@ class App extends Component {
         <button type="button" onClick={this.handleKycWhitelisting}>Add to Whitelist</button>
         <h2>Complete Apply</h2>
         Your Status: <input type="text" name="status" value={this.status[this.state.userTokens]} onChange={this.handleInputChange} disabled/>  
-        
         Your OTP<input type="text" name="otp" value={this.state.userOTP} onChange={this.handleInputChange} disabled/>
         <p>You currently have: {this.state.userTokens} GG Tokens</p>
         <button type="button" onClick={this.handleBuyTokens}>Finish</button>
