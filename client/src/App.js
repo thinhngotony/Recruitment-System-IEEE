@@ -113,7 +113,6 @@ class App extends Component {
         Your OTP: <input type="text" name="otp" value={this.otp[this.state.kycAddress]} onChange={this.handleInputChange} /><br></br><br></br>
         <button type="button" onClick={this.handleBuyTokens}>Claim GG token</button><br></br><br></br>
         <button type="button" onClick={this.handleRecognition}onChange={this.handleInputChange} disabled>Download module training face</button><br></br><br></br>
-        <a href="https://drive.google.com/drive/folders/1dboInoA0NxSDt4_2zjapmiJmFuFcU2cW?usp=sharing" target="_parent"><button>Upload your facial data now</button></a>
       </div>
     );
   }
