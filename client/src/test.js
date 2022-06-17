@@ -14,5 +14,22 @@ function getQuote() {
     return db.collection("sampleData").doc("inspiration").set(quoteData).then(() => {
     console.log("new quote was written to the database");})
     }
-    // getQuote();
+
+    getQuote();
+
+async function asyncCall() {
+
+    const  cityRef = db.collection('otp_authentication').doc('user_1');
+    const doc = await cityRef.get();
+    if (!doc.exists) {
+    console.log('No such document!');
+    } else {
+    console.log('Document data:', doc.data());
+    }
+}
+
+asyncCall();
+      
+
     
+
