@@ -75,7 +75,7 @@ class App extends Component {
   
 
   handleBuyTokens = async() => {
-    await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
+      await this.tokenSaleInstance.methods.buyTokens(this.accounts[0]).send({from: this.accounts[0], value: this.web3.utils.toWei("1","wei")});
   }
 
 
@@ -112,7 +112,7 @@ class App extends Component {
         Your Status: <input type="text" name="status" value={this.status[this.state.userTokens]} onChange={this.handleInputChange} disabled/><br></br><br></br>
         Your OTP: <input type="text" name="otp" value={this.otp[this.state.kycAddress]} onChange={this.handleInputChange} /><br></br><br></br>
         <button type="button" onClick={this.handleBuyTokens}>Claim GG token</button><br></br><br></br>
-        <button type="button" onClick={this.handleRecognition}disabled>Download module training face</button><br></br><br></br>
+        <button type="button" onClick={this.handleRecognition}onChange={this.handleInputChange} disabled>Download module training face</button><br></br><br></br>
         <a href="https://drive.google.com/drive/folders/1dboInoA0NxSDt4_2zjapmiJmFuFcU2cW?usp=sharing" target="_parent"><button>Upload your facial data now</button></a>
       </div>
     );
