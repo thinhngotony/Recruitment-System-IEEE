@@ -1,3 +1,8 @@
+body {
+  width: 80%;
+  margin: auto;
+}
+
 .App {
   text-align: center;
 }
@@ -19,4 +24,24 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+label {
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+input {
+  padding: 0.5rem;
+  outline: none;
+}
+
+button {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
 }

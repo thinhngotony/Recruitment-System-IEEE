@@ -1,0 +1,31 @@
+@use "../../scss/" as *;
+
+.btn {
+  display: block;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.btn-outline {
+  background: rgba(248, 249, 250, 0.1);
+}
+
+.btn-outline:hover {
+  background: hsla(0, 0%, 100%, 0.2);
+}
+
+.btn-primary {
+  background: rgba(52,152,219,.1);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background: #3498db;
+  box-shadow: 0 4px 11px rgb(52 152 219 / 35%);
+}

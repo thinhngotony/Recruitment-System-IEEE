@@ -1,0 +1,203 @@
+@use "../../scss/" as *;
+
+.header {
+  position: relative  ;
+  height: $header-height;
+  width: 100%;
+  background-color: #112641;
+  color: $txt-color;
+  border-bottom: 1px solid #18365B;
+
+  &__wrap {
+    position: relative;
+    @include flex(center, space-between);
+    height: 100%;
+  }
+
+  &__menu-left {
+    @include flex(center, unset);
+    &__logo {
+      width: 50px;
+      height: 50px;
+
+      &__text {
+        margin-left: 1rem;
+        font-size: 1.8rem;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: 600;
+      }
+    }
+  }
+
+  &__menu-right {
+    @include flex(center, unset);
+    position: relative;
+
+    &__list {
+      @include flex(center, unset);
+    }
+
+    &__item {
+      position: relative;
+      padding: 1rem;
+      cursor: pointer;
+      height: 100%;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        transition: width 0.5s ease;
+        height: 2px;
+        background-color: #3498db;
+      }
+
+      &.active {
+        color: #1f8adb;
+      }
+
+      &.active::after,
+      &:hover::after {
+        width: 100%;
+      }
+
+      &:hover {
+        color: #1f8adb;
+      }
+    }
+
+    @include mobile {
+      display: none;
+    }
+
+    &__account {
+      position: relative;
+      padding: 1rem 0;
+      cursor: pointer;
+
+      &::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 40px;
+        width: 250px;
+        height: 20px;
+        background-color: transparent;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        transition: width 0.5s ease;
+        height: 2px;
+        background-color: #3498db;
+      }
+
+      &:hover::after {
+        width: 100%;
+      }
+
+      &__wrap {
+        position: relative;
+        @include flex(center, unset);
+        padding: 0 1rem;
+        border-left: 1px solid #18365B;
+        border-right: 1px solid #18365B;
+      }
+  
+      .login {
+        cursor: pointer;
+      }
+  
+      .login:hover {
+        color: #1f8adb;
+      }
+
+      &__name {
+        margin: 0 4px;
+        text-transform: uppercase;
+      }
+
+      &:hover {
+        color: #1f8adb;
+      }
+
+      &:hover &__list {
+        display: block;
+      }
+
+      &__list {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: $header-height;
+        width: 250px;
+        z-index: 1;
+        background-color: #112641;
+        border-bottom-right-radius: 0.35rem;
+        border-bottom-left-radius: 0.35rem;
+        box-shadow: 0 8px 20px rgb(52 152 219 / 8%);
+      }
+
+      &__item {
+        width: 100%;
+        padding: 1rem 2rem;
+        color: #fff;
+      }
+
+      &__item:hover {
+        color: #1f8adb;
+      }
+
+      &__btn {
+        width: 100%;
+        padding: 1rem;
+
+      }
+    }
+  }
+
+  &__menu-mobile {
+    display: none;
+
+    &__toggle {
+      padding: 1rem;
+      margin-right: -1rem;
+    }
+
+    &__list {
+      display: none;
+      background-color: #112641;
+      color: $txt-color;
+      position: absolute;
+      left: 0;
+      top: 60px;
+      width: 100%;
+      padding: 0 2rem;
+      z-index: 1;
+
+      &.active {
+        display: block;
+      }
+
+      @include mobile {
+        padding: 0 1rem;
+      }
+    }
+
+    &__item {
+      padding: 0.5rem 0;
+    }
+
+    @include mobile {
+      display: block;
+    }
+  }
+}

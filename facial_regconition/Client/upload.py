@@ -5,7 +5,6 @@ gauth = GoogleAuth()
 drive = GoogleDrive(gauth)
 
 folder = '1jx69VcO8uSBKUslgzQAmVKMzNkYm9kl0'
-
 upload_file_list = ['trainer.yml']
 for upload_file in upload_file_list:
 	gfile = drive.CreateFile({'parents': [{'id': folder}]})
